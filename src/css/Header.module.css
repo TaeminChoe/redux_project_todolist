@@ -1,0 +1,15 @@
+/* default */
+
+.header {
+	text-align: center;
+	margin: 10px;
+}
+
+/* 가로 해상도 768 이상 */
+@media (min-width: 768px) {
+	.header {
+		padding-left: 50px;
+		font-size: 80px;
+		text-align: left;
+	}
+}

@@ -1,0 +1,30 @@
+/* default */
+
+.toDoList {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.toDoList .list {
+	padding: 0px;
+}
+
+.toDoList .list li {
+	list-style: none;
+	margin: 5px;
+}
+
+/* 가로 해상도 768 이상 */
+@media (min-width: 768px) {
+	.toDoList .input {
+		width: 400px;
+		height: 40px;
+		font-size: 30px;
+	}
+
+	.toDoList .list li {
+		display: flex;
+		flex-direction: column;
+	}
+}
