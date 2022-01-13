@@ -10,6 +10,7 @@ function toDoList(state = [], action) {
 					id: now.getTime(),
 					value: action.toDo,
 					inDone: false,
+					date: action.date,
 				},
 			];
 

@@ -203,3 +203,107 @@ body {
 ### 데스크탑 환경(768px 초과)
 
 ![image](https://user-images.githubusercontent.com/92558961/149096308-762f5509-595e-4bb8-877d-af3f70c90108.png)
+
+# [2022.01.13] date 기능 추가
+
+## Date 객체
+
+-   JavaScript에서 제공하는 시간 정보를 가져올 수 있는 API
+
+### 사용법
+
+-   선언
+
+```jsx
+const date = new Date();
+// 현지 시간 기준으로 객체를 생성한다.
+
+// 기준 시간을 지정할 수 있다.
+const date = new Date("December 17, 1995 03:24:00");
+const date = new Date("1995-12-17T03:24:00");
+const date = new Date(1995, 11, 17); // 월은 0부터 시작(1995년 12월 17일)
+const date = new Date(1995, 11, 17, 3, 24, 0);
+```
+
+-   get함수
+    -   date.getDate() : 현지 시간 기준 일(1~31) 반환
+    -   date.getDay() : 현지 시간 기준 요일(0~6) 반환
+    -   date.getFullYear() : 현지 시간 기준 연도(네 자리) 반환
+    -   date.getHours() : 현지 시간 기준 시(0~23) 반환
+    -   date.getMinutes() : 현지 시간 기준 분(0~59) 반환
+    -   date.getSeconds() : 현지 시간 기준 초(0~59)반환
+
+참조
+
+[https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Date](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Date)
+
+---
+
+## React Datepicker
+
+-   npm에서 관리되는 라이브러리
+-   캘린더에서 날짜를 선택하는 UI 컴포넌트
+
+### 설치
+
+`npm install react-datepicker`
+
+### 기본 예제
+
+```jsx
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+
+const Example = () => {
+	const [startDate, setStartDate] = useState(new Date());
+	return (
+		<DatePicker
+			selected={startDate}
+			onChange={date => setStartDate(date)}
+		/>
+	);
+};
+```
+
+-   css파일은 datepicker의 css파일이므로 꼭 import해야 함
+-   오늘 날짜를 초기 날짜로 지정하고 날짜를 변경할 때마다 date state를 변경
+
+참조
+
+[https://reactdatepicker.com/](https://reactdatepicker.com/)
+
+## 날짜 기능이 있는 To Do List
+
+-   기존에 진행했던 프로젝트인 to do list 프로젝트를 활용했습니다.
+    [2022.01.12(수)](https://www.notion.so/2022-01-12-101db3d33a2b43059a2621abea746538) / [2022.01.11]교육보고서
+-   이전의 진행했던 프로젝트 이므로, 추가된 date관련 내용만 언급합니다.
+-   date기능을 사용해 날짜별 to do list를 관리할 수 있도록 하였습니다.
+
+### module/ToDoList/reducers/index.js
+
+![image](https://user-images.githubusercontent.com/92558961/149299104-2757c390-5c8f-4930-b599-3efd28c9e220.png)
+
+### module/ToDoList/actions/index.js
+
+![image](https://user-images.githubusercontent.com/92558961/149299132-b5de1864-40de-4ae8-a8e6-e792739cde57.png)
+
+### components/ToDoList.js
+
+![image](https://user-images.githubusercontent.com/92558961/149299284-0783e014-782d-430e-bb8f-3cce240f801d.png)
+
+-   7: 설치한 DatePicker import
+-   8: 제공하는 css import
+-   9: calendar의 언어를 한글 버전으로 변경
+-   13: date : 캘린더에서 지정한 날짜를 관리하여 날짜에 해당되는 to do만 표현
+-   15: toString : date객체의 연도, 월, 일만 추출하여 문자열로 반환해주는 함수
+-   19: addToDo : action의 addToDo함수에 toDo와 문자열로 변환된 date를 전달
+
+![image](https://user-images.githubusercontent.com/92558961/149299317-422d1875-6d41-4d3b-afd2-2e1926e3e718.png)
+
+-   DatePicker 컴포넌트 랜더링
+
+![image](https://user-images.githubusercontent.com/92558961/149299339-49ecdaf0-579b-479f-ac59-8735417fab19.png)
+
+-   77: action의 addToDo함수를 dispatch한다. date도 전달하기 위해 추가
