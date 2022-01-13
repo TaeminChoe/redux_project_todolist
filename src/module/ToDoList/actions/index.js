@@ -1,7 +1,8 @@
-export function addToDo(toDo) {
+export function addToDo(toDo, date) {
 	return {
 		type: "ADD_TODO",
 		toDo,
+		date,
 	};
 }
 

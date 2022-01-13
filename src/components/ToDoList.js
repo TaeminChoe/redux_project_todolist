@@ -4,12 +4,21 @@ import { connect } from "react-redux";
 import { addToDo, delToDo } from "../module/ToDoList/actions";
 import ToDo from "./ToDo";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ko } from "date-fns/esm/locale";
+
 function ToDoList(props) {
 	const [toDo, setToDo] = useState("");
+	const [date, setDate] = useState(new Date());
+
+	function toString(date) {
+		return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+	}
 
 	function addToDo(event) {
 		event.preventDefault();
-		props.addToDo(toDo);
+		props.addToDo(toDo, toString(date));
 		setToDo("");
 	}
 
@@ -19,6 +28,10 @@ function ToDoList(props) {
 
 	return (
 		<div className={toDoListCss.toDoList}>
+			<div className={toDoListCss.date}>
+				<label>날짜 선택</label>
+				<DatePicker selected={date} onChange={setDate} locale={ko} />
+			</div>
 			<div>
 				<form onSubmit={addToDo}>
 					<input
@@ -35,11 +48,19 @@ function ToDoList(props) {
 			) : (
 				<div>
 					<ul className={toDoListCss.list}>
-						{props.toDoList.map(toDo => (
-							<li key={toDo.id}>
-								<ToDo toDo={toDo} delToDo={props.delToDo} />
-							</li>
-						))}
+						{props.toDoList.map(toDo => {
+							const stringDate = toString(date);
+							if (toDo.date === stringDate) {
+								return (
+									<li key={toDo.id}>
+										<ToDo
+											toDo={toDo}
+											delToDo={props.delToDo}
+										/>
+									</li>
+								);
+							}
+						})}
 					</ul>
 				</div>
 			)}
@@ -52,7 +73,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-	addToDo: toDo => dispatch(addToDo(toDo)),
+	addToDo: (toDo, date) => dispatch(addToDo(toDo, date)),
 	delToDo: id => dispatch(delToDo(id)),
 });
 
